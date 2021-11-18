@@ -5,7 +5,6 @@ package model;
 public class Damier {
 	private int damX;
 	private int damY;
-	private boolean blanc;
 	private char[][] damier;
 	
 	// Construire le damier
@@ -16,12 +15,13 @@ public class Damier {
 		damier = new char[damX][damY]; 
 		for (int i = 0; i < damX; i++) {
 			for (int j = 0; j < damY; j++) {
-				damier[i][j] = '0';
-				if (i % 2 == 0) {
-					blanc = true;
-				} else {
-					blanc = false;
-				}			
+				if((j%2==0 && i%2==0) || (j%2!=0 && i%2!=0)){
+					damier[i][j] = '5';
+				}else {
+					damier[i][j] = '-';	
+				}
+				
+				
 			}
 		}
 	}
@@ -40,7 +40,31 @@ public class Damier {
 		System.out.println();
 	}
 	
-	  public boolean estVide(int[] pos) {
-	        return !hasPion(pos);
-	    }
+	public void Placer(int x, int y, char c) {
+		for (int i = 0; i < x; i++) {
+			for (int j = 0; j < y; j++) {
+				x = x-1;
+				y = y-1;
+				System.out.println(damier[i][j]);
+				if (x < 0 || y < 0 || x > damX || y > damY) {
+					System.out.println("Erreur !");
+					return;
+				}
+				if (damier[x][y] == '-' && damier[x][y] % 2 != 0) {
+					damier[x][y] = c;
+				} else {
+					System.out.println("Erreur, case inaccessible !");
+				}
+			}
+		}
+	}
+	public void printPion() {
+		for (int i = 0; i < damX; i++) {
+			for (int j = 0; j < damY; j++) {
+				System.out.print(" B " + damier[i][j]);
+			}
+		}
+	
+	}
+	
 }
