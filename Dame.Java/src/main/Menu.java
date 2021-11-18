@@ -1,9 +1,9 @@
 package main;
 import game.Ia;
-import game.Joueur;
+import game.Jcj;
 import model.Damier;
-import model.Jcj;
 import utilitaires.Utilitaires;
+
 public class Menu {
 	String nom;
 

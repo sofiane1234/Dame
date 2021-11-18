@@ -16,9 +16,9 @@ public class Damier {
 		for (int i = 0; i < damX; i++) {
 			for (int j = 0; j < damY; j++) {
 				if((j%2==0 && i%2==0) || (j%2!=0 && i%2!=0)){
-					damier[i][j] = '5';
+					damier[i][j] = '1';
 				}else {
-					damier[i][j] = '-';	
+					damier[i][j] = '0';	
 				}
 				
 				
