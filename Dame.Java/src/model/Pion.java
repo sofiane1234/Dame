@@ -34,66 +34,63 @@ public class Pion {
     public void setTypePion(String typePion) {
         this.typePion = typePion;
     }
-
+    
+    //Construction du mouvement avec la methode bouge
     public boolean bouge(int[] newpos) {
-        boolean reussi = false;
+        boolean bouge = false;
         if (this.typePion.equals("pion") && (this.blanc == true && (newpos[0] >= (this.coordX - 1) && newpos[0] <= (this.coordX + 1)) && (newpos[1] >= this.coordY && newpos[1] < (this.coordY + 2)))) {
             this.coordX = newpos[0];
             this.coordY = newpos[1];
             this.select = false;
-            reussi = true;
+            bouge = true;
         } else {
             if (this.typePion.equals("pion") && (this.blanc == false && (newpos[0] >= (this.coordX - 1) && newpos[0] <= (this.coordX + 1)) && (newpos[1] <= this.coordY && newpos[1] < (this.coordY + 2)))) {
                 this.coordX = newpos[0];
                 this.coordY = newpos[1];
                 this.select = false;
-                reussi = true;
+                bouge = true;
             }
         }
-        if (typePion.equals("dame") && ((newpos[0] != this.coordX) && newpos[1] != this.coordY)) { // On bloque pas les diagonales, le joueur est intelligent sa mère.
+        if (typePion.equals("dame") && ((newpos[0] != this.coordX) && newpos[1] != this.coordY)) { 
             this.coordX = newpos[0];
             this.coordY = newpos[1];
             this.select = false;
-            reussi = true;
+            bouge = true;
         }
 
-        if (reussi && (this.typePion.equals("pion") && ((this.blanc && this.coordY == 9) || (!this.blanc && this.coordY == 0)))) { //Taille commençant à 0 donc 9
+        if (bouge && (this.typePion.equals("pion") && ((this.blanc && this.coordY == 9) || (!this.blanc && this.coordY == 0)))) { 
             this.typePion = "dame";
             System.out.println("Un pion se transforme en dame !");
             return true;
         } else {
-            return reussi;
+            return bouge;
         }
     }
     
-    public boolean mange(Pion cible, Damier damier) {
+    public boolean mange(Pion target, Damier damier) {
         this.select = false;
-        int [] posApresManger = this.getPosManger(cible);
-        //System.out.println("Distance à la cible: "+distanceAvec(cible)+" test:"+distanceValide(distanceAvec(cible)));
+        int[] posApresManger = this.getPosManger(target);
         int[] oldPos = getPos();
-        //if (this.bouge(cible.getPos())) {
-        if(!cible.isInvicible() && Damier.estVide(posApresManger) && this.blanc != cible.blanc
-                && distanceValide(distanceAvec(cible))) {
-            //System.out.println(posApresManger[0]+" "+posApresManger[1]);
-            //System.out.println(cible.getY()+" "+cible.getX());
-            setPos(cible.getPos());
+        if(!target.isInvicible() && Damier.isEmpty(posApresManger) && this.blanc != target.blanc
+                && distanceValide(distanceAvec(target))) {
+            setPos(target.getPos());
 
-            if(this.bouge(posApresManger)) { //si il y a une case où le pion peut atterrir
-                cible.tuer(); //note : deux pions peuvent être sur une MÊME case ! (mais un seul sera affiché)
+            if(this.bouge(posApresManger)) { 
+                target.manger();
                 return true;
             }
             else {
-                setPos(oldPos);//on annule les changements
+                setPos(oldPos);
                 System.out.println("Erreur: impossible de manger vers cette case");
                 return false;}
         } else {
-            //System.out.print("mangeage échoué");
+           
             return false;
         }
     }
     public String toString() {
         if (System.getProperty("os.name").equals("Linux")) {
-            if (this.selectionne) {
+            if (this.select) {
                 return "@";
             } else {
                 if (this.typePion.equals("pion")) {
@@ -102,7 +99,7 @@ public class Pion {
                     else
                         return "◉";
                 } else {
-                    if (this.typePion.equals("dame")) { //une Dame
+                    if (this.typePion.equals("dame")) {
                         if (!blanc)
                             return "▢";
                         else
@@ -111,7 +108,7 @@ public class Pion {
                 }
             }
         } else {
-            if (this.selectionne) {
+            if (this.select) {
                 return "@";
             } else {
                 if (this.typePion.equals("pion")) {
@@ -132,28 +129,26 @@ public class Pion {
     }
     public int[] getPosManger(Pion cible){
         int[] mangerpos = new int[2];
-        int k=0;
-        int j=0;
+        int k = 0;
+        int j = 0;
         if(this.coordX <= cible.coordX )
-            k = 1; // cas 1 => Cible est à droite de pion
+            k = 1;
         else
-            k = -1; // cas 2 => Cible est à gauche de pion
+            k = -1; 
         if(this.coordY <= cible.coordY)
-            j = -1; // cas 1 => Cible est en dessus de pion
+            j = -1; 
         else
-            j = 1; // cas 2 => Cible est au dessous de pion
+            j = 1; 
 
-        if(k==1)
-            mangerpos[0]=(cible.coordX+1);
+        if(k == 1)
+            mangerpos[0] = (cible.coordX+1);
         else
-            mangerpos[0]=(cible.coordX-1);
-        if(j==1)
-            mangerpos[1]=(cible.coordY-1);
+            mangerpos[0] = (cible.coordX-1);
+        if(j == 1)
+            mangerpos[1] = (cible.coordY-1);
         else
-            mangerpos[1]=(cible.coordY+1);
-
-        //System.out.println("position pion :"+this.coordX+" "+this.coordY);
-        //System.out.println("position cible: "+mangerpos[0]+" "+mangerpos[1]);
+            mangerpos[1] = (cible.coordY+1);
+        
         return mangerpos;
     }
 
@@ -163,13 +158,13 @@ public class Pion {
         pos[1] = this.coordY;
         return pos;
     }
-
-    public void selectionner() { //pour montrer visuellement que ce pion va être bougé par le joueur
-        this.selectionne = true;
+    //Selection du pion
+    public void selectionner() { 
+        this.select = true;
     }
 
     public void deselectionner() {
-        this.selectionne = false;
+        this.select = false;
     }
     public boolean isVivant() {
         return !typePion.equals("mort");
@@ -180,13 +175,13 @@ public class Pion {
     public boolean isPion() {
         return typePion.equals("pion");
     }
-    public void tuer() {
+    public void manger() {
         if(!isVivant())
             System.out.println("Un pion mort a été tué !!!");
         this.typePion = "mort";
     }
     public void setPos(int[] pos){
-        if(pos.length==2){
+        if(pos.length == 2){
             coordX = pos[0];
             coordY = pos[1];
         }
@@ -195,20 +190,18 @@ public class Pion {
     }
     public int distanceAvec(Pion cible) {
         return (int)Math.sqrt(
-                Math.pow(Math.abs(this.coordX-cible.coordX), 2)
-                +Math.pow(Math.abs(this.coordY-cible.coordY),2)
-                ); //racine de deltaX² + deltaY²
+                Math.pow(Math.abs(this.coordX-cible.coordX), 2) + Math.pow(Math.abs(this.coordY-cible.coordY),2));
     }
 
     public boolean distanceValide(int distance) {
-        return this.isDame() || distance==1; //faire un tableau de vérité; j'ai inversé la colonne distance
-    }
+        return this.isDame() || distance == 1;     
+        }
     public boolean isInvicible() {
-        return (coordX==0||coordX==9||coordY==0||coordY==9);
+        return (coordX == 0 || coordX == 9 || coordY == 0 || coordY == 9);
     }
 
     public boolean equals(Pion pion) {
-        if(pion.blanc==this.blanc)
+        if(pion.blanc == this.blanc)
             return true;
         else return false;
     }
