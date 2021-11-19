@@ -8,16 +8,15 @@ public class Damier {
 	private char[][] damier;
 	
 	// Construire le damier
-	
 	public Damier(int x, int y) {
 		damX = x;
 		damY = y;
 		damier = new char[damX][damY]; 
 		for (int i = 0; i < damX; i++) {
 			for (int j = 0; j < damY; j++) {
-				if((j%2==0 && i%2==0) || (j%2!=0 && i%2!=0)){
+				if((j % 2 == 0 && i % 2 == 0) || (j % 2 != 0 && i % 2 != 0)){
 					damier[i][j] = '1';
-				}else {
+				} else {
 					damier[i][j] = '0';	
 				}
 				
@@ -28,16 +27,16 @@ public class Damier {
 	
 	
 	// Afficher le damier
-	
 	public void printTab() {
-		System.out.println();
+		System.out.println("-----------------------------------");
 		for (int i = 0; i < damX; i++) {
+			System.out.print("[ ");
 			for (int j = 0; j < damY; j++) {
-				System.out.print(" | " + damier[i][j]);
+				System.out.print("|" + damier[i][j]);
 			}
-			System.out.println(" | ");
+			System.out.println("| ]");
 		}
-		System.out.println();
+		System.out.print("-----------------------------------");
 	}
 	
 	public void Placer(int x, int y, char c) {

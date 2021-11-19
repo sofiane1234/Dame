@@ -89,7 +89,7 @@ public class Pion {
         }
     }
     public String toString() {
-        if (System.getProperty("os.name").equals("Linux")) {
+        if (System.getProperty("os.name").equals("Windows")) {
             if (this.select) {
                 return "@";
             } else {
