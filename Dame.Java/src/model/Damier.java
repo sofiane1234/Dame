@@ -28,7 +28,7 @@ public class Damier {
 	
 	// Afficher le damier
 	public void printTab() {
-		System.out.println("-----------------------------------");
+		System.out.println(" ----------------------- ");
 		for (int i = 0; i < damX; i++) {
 			System.out.print("[ ");
 			for (int j = 0; j < damY; j++) {
@@ -36,7 +36,7 @@ public class Damier {
 			}
 			System.out.println("| ]");
 		}
-		System.out.print("-----------------------------------");
+		System.out.print(" ----------------------- ");
 	}
 	
 	public void Placer(int x, int y, char c) {

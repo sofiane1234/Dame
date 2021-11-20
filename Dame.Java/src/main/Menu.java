@@ -11,7 +11,7 @@ public class Menu {
 	
 	public void menuPrincipal() {
 			
-			Damier damier = new Damier(15,15);
+			Damier damier = new Damier(10,10);
 			System.out.println("Jeu de dames");
 			System.out.println("1. JCJ");
 			System.out.println("2. JC IA");
