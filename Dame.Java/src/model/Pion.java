@@ -117,7 +117,7 @@ public class Pion {
                     else
                         return "n";
                 } else {
-                    if (this.typePion.equals("dame")) { //une Dame
+                    if (this.typePion.equals("dame")) {
                         if (blanc)
                             return "B";
                         else
@@ -202,7 +202,8 @@ public class Pion {
 
     public boolean equals(Pion pion) {
         if(pion.blanc == this.blanc)
-            return true;
-        else return false;
+            return true; 
+        else {
+        	return false;
     }
 }
