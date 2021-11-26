@@ -71,7 +71,7 @@ public class Pion {
         this.select = false;
         int[] posApresManger = this.getPosManger(target);
         int[] oldPos = getPos();
-        if(!target.isInvicible() && Damier.isEmpty(posApresManger) && this.blanc != target.blanc
+        if(!target.isInvicible() && damier.isEmpty(posApresManger) && this.blanc != target.blanc
                 && distanceValide(distanceAvec(target))) {
             setPos(target.getPos());
 
@@ -127,11 +127,13 @@ public class Pion {
             }
         }
     }
+    
+    //Methode pour bouger d'une case de plus en avant ou d'une case de moins en arrière en mangeant un pion 
     public int[] getPosManger(Pion cible){
         int[] mangerpos = new int[2];
         int k = 0;
         int j = 0;
-        if(this.coordX <= cible.coordX )
+        if(this.coordX <= cible.coordX) {
             k = 1;
         else
             k = -1; 
@@ -141,7 +143,7 @@ public class Pion {
             j = 1; 
 
         if(k == 1)
-            mangerpos[0] = (cible.coordX+1);
+            mangerpos[0] = (cible.coordX + 1);
         else
             mangerpos[0] = (cible.coordX-1);
         if(j == 1)
@@ -151,19 +153,20 @@ public class Pion {
         
         return mangerpos;
     }
-
-    public int[] getPos() {
+     //retourner la position du pion
+    public int[] getPlace() {
         int[] pos = new int[2];
         pos[0] = this.coordX;
         pos[1] = this.coordY;
         return pos;
     }
-    //Selection du pion
+    //Selection du pion a bouger
     public void selectionner() { 
         this.select = true;
     }
-
-    public void deselectionner() {
+    
+    
+    public void unselect() {
         this.select = false;
     }
     public boolean isVivant() {
